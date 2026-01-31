@@ -42,9 +42,25 @@ A lightweight Flask-based web application that provides a clean interface for se
 ### Running the Application
 Start the development server:
 ```bash
+# Option 1: Run directly with Python
 python app.py
+
+# Option 2: Run using Flask CLI
+flask run --debug --port 5001
 ```
 The app will be available at `http://127.0.0.1:5001`.
+
+## Development & Quality Control
+
+### Linting & Formatting
+We use `ruff` for linting and formatting.
+```bash
+# Check for errors
+ruff check .
+
+# Format code
+ruff format .
+```
 
 ## Testing
 

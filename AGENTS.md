@@ -23,9 +23,10 @@ pip install -r requirements.txt
 
 ### Running the Application
 ```bash
-# Development mode (runs on port 5001)
+# Option 1: Run directly with Python (port 5001 is hardcoded in app.py)
 python app.py
-# OR
+
+# Option 2: Run using Flask CLI
 flask run --debug --port 5001
 ```
 
