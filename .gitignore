@@ -2,3 +2,16 @@
 __pycache__/
 .env
 *.pyc
+
+# Testing & Linting cache
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# macOS system files
+.DS_Store
+
+# IDE settings
+.vscode/
+.idea/
