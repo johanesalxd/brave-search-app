@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ query }} - Brave Search</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <form action="/search" method="get">
+            <input type="text" name="q" value="{{ query }}" required>
+            <button type="submit">Search</button>
+        </form>
+    </header>
+    
+    <main style="margin-top: 2rem;">
+        {% if results %}
+            {% for result in results %}
+                <div class="result-item">
+                    <a href="{{ result.url }}">
+                        <span class="result-url">{{ result.url }}</span>
+                        <h3>{{ result.title }}</h3>
+                    </a>
+                    <p class="result-description">{{ result.description }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No results found for "{{ query }}".</p>
+        {% endif %}
+    </main>
+</body>
+</html>
