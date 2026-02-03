@@ -1,17 +1,18 @@
 # Brave Search App
 
-A lightweight Flask-based web application that provides a clean interface for searching the web using the Brave Search API.
+A lightweight Go-based web application that provides a clean interface for searching the web using the Brave Search API.
 
 ## Features
 - Minimalist search interface
 - Fast results powered by Brave Search API
+- Built with Go standard library (no external web frameworks)
 - Easy configuration via environment variables
 
 ## Setup & Installation
 
 ### Prerequisites
-- Python 3.13 or higher
-- [uv](https://github.com/astral-sh/uv) (recommended) or pip
+- Go 1.24 or higher
+- [mise](https://mise.jdx.dev/) (recommended for version management)
 
 ### Installation
 
@@ -21,64 +22,50 @@ A lightweight Flask-based web application that provides a clean interface for se
    cd brave-search-app
    ```
 
-2. **Install dependencies:**
-   Using `uv`:
+2. **Configure Environment:**
+   Ensure your environment has the Brave Search API key. You can use a `.env` file (if using `mise` or a similar tool that loads it) or export it:
    ```bash
-   uv sync
-   ```
-   Using `pip`:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configure Environment:**
-   Create a `.env` file in the root directory and add your Brave Search API key:
-   ```env
-   BRAVE_API_KEY=your_api_key_here
+   export BRAVE_API_KEY=your_api_key_here
    ```
 
 ## Usage
 
 ### Running the Application
-Start the development server:
+Start the server:
 ```bash
-# Option 1: Run directly with Python
-python app.py
-
-# Option 2: Run using Flask CLI
-flask run --debug --port 5001
+go run cmd/server/main.go
 ```
 The app will be available at `http://127.0.0.1:5001`.
 
 ## Development & Quality Control
 
-### Linting & Formatting
-We use `ruff` for linting and formatting.
+### Formatting & Linting
+We follow the Google Go Style Guide.
 ```bash
-# Check for errors
-ruff check .
+# Check formatting
+gofmt -l .
 
-# Format code
-ruff format .
+# Run static analysis
+go vet ./...
 ```
 
 ## Testing
-
-The project uses `pytest` for testing.
+The project uses the standard Go `testing` package.
 
 ### Run all tests
 ```bash
-python -m pytest
+go test ./...
 ```
 
-### Run tests with coverage output
+### Run tests with verbose output
 ```bash
-python -m pytest -v
+go test -v ./...
 ```
 
 ## Project Structure
-- `app.py`: Main Flask application routes.
-- `brave_search.py`: Core logic for interacting with Brave Search API.
-- `templates/`: HTML templates (Jinja2).
-- `static/`: Static assets (CSS/JS).
-- `tests/`: Unit and integration tests.
+Adhering to the standard Go layout:
+- `cmd/server/`: Main application entry point.
+- `internal/brave/`: Core logic for Brave Search API interaction.
+- `internal/handlers/`: HTTP request handlers.
+- `templates/`: HTML templates (Go `html/template`).
+- `static/`: Static assets (CSS).

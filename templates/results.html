@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ query }} - Brave Search</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>{{ .Query }} - Brave Search</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <header>
         <form action="/search" method="get">
-            <input type="text" name="q" value="{{ query }}" required>
+            <input type="text" name="q" value="{{ .Query }}" required>
             <button type="submit">Search</button>
         </form>
     </header>
     
     <main style="margin-top: 2rem;">
-        {% if results %}
-            {% for result in results %}
+        {{ if .Results }}
+            {{ range .Results }}
                 <div class="result-item">
-                    <a href="{{ result.url }}">
-                        <span class="result-url">{{ result.url }}</span>
-                        <h3>{{ result.title }}</h3>
+                    <a href="{{ .URL }}">
+                        <span class="result-url">{{ .URL }}</span>
+                        <h3>{{ .Title }}</h3>
                     </a>
-                    <p class="result-description">{{ result.description }}</p>
+                    <p class="result-description">{{ .Description }}</p>
                 </div>
-            {% endfor %}
-        {% else %}
-            <p>No results found for "{{ query }}".</p>
-        {% endif %}
+            {{ end }}
+        {{ else }}
+            <p>No results found for "{{ .Query }}".</p>
+        {{ end }}
     </main>
 </body>
 </html>
