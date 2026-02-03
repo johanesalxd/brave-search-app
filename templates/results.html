@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-    <header>
+    <header class="results-header">
+        <a href="/" class="home-button">Home</a>
         <form action="/search" method="get">
             <input type="text" name="q" value="{{ .Query }}" required>
             <button type="submit">Search</button>
