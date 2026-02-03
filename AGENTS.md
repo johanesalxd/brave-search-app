@@ -1,161 +1,133 @@
-# AI Agent Guide for Brave Search App
+# AI Agent Guide for Brave Search App (Go)
 
 This document outlines the development, testing, and style guidelines for the Brave Search App. AI agents operating in this codebase should strictly adhere to these rules to ensure consistency and maintainability.
 
 ## 1. Project Context
-- **Type:** Python Web Application (Flask)
-- **Package Manager:** `uv` (preferred) or `pip`
-- **Python Version:** >= 3.13
-- **Core Dependencies:** `flask`, `requests`, `python-dotenv`
+- **Type:** Go Web Application (Native `net/http`)
+- **Version Management:** `mise` (preferred)
+- **Go Version:** Latest (managed via `mise.toml`)
+- **Core Dependencies:** Standard Library only
 
 ## 2. Environment Setup
-Before making changes, ensure dependencies are installed.
+The project uses `mise` for tool versioning.
 
 ```bash
-# Using uv (Recommended)
-uv sync
+# Install tools defined in mise.toml
+mise install
 
-# Using pip
-pip install -r requirements.txt
+# Configuration is handled via environment variables
+export BRAVE_API_KEY=your_api_key_here
 ```
 
 ## 3. Build, Lint, and Test Commands
 
 ### Running the Application
 ```bash
-# Option 1: Run directly with Python (port 5001 is hardcoded in app.py)
-python app.py
-
-# Option 2: Run using Flask CLI
-flask run --debug --port 5001
+# Run the server directly
+go run cmd/server/main.go
 ```
 
 ### Testing
-*Note: The project uses `pytest` conventions, though explicit test files may need to be created in a `tests/` directory.*
+The project uses the standard Go `testing` package.
 
 - **Run all tests:**
   ```bash
-  python -m pytest
+  go test ./...
   ```
 
-- **Run a single test file:**
+- **Run tests in a specific package:**
   ```bash
-  python -m pytest tests/test_app.py
+  go test ./internal/brave
   ```
 
 - **Run a specific test case (IMPORTANT):**
-  When debugging or iterating on a specific feature, always run only the relevant test to save time.
+  Use the `-run` flag followed by a regex of the test name.
   ```bash
-  python -m pytest tests/test_app.py::test_search_functionality
+  go test -v ./internal/brave -run TestClient_Search/success
   ```
 
-- **Run tests with output:**
-  Use `-s` to see print statements and `-v` for verbose output.
+- **Run tests with verbose output:**
   ```bash
-  python -m pytest -vs tests/test_app.py
+  go test -v ./...
   ```
 
 ### Linting and Formatting
-Code should be linted using `ruff` (or `flake8`) and formatted with `black` compatible styles.
+Adhere to the Google Go Style Guide.
 
-- **Check for linting errors:**
+- **Check formatting:**
   ```bash
-  ruff check .
+  gofmt -l .
   ```
 
-- **Fix linting errors automatically:**
+- **Run static analysis:**
   ```bash
-  ruff check . --fix
-  ```
-
-- **Format code:**
-  ```bash
-  ruff format .
+  go vet ./...
   ```
 
 ## 4. Code Style Guidelines
 
-### Python General
-- **Standard:** Follow **PEP 8** strictly.
-- **Indentation:** Use 4 spaces. No tabs.
-- **Line Length:** 88 characters (Black standard) or 100 characters.
+### Go General
+- **Formatting:** Strictly use `gofmt`.
+- **Indentation:** Use tabs for indentation.
+- **Line Length:** Aim for 80 characters, max 100.
 
 ### Imports
-Group imports in the following order, separated by a blank line:
-1.  **Standard Library** (e.g., `os`, `sys`, `typing`)
-2.  **Third-Party Libraries** (e.g., `flask`, `requests`)
-3.  **Local Application Imports** (e.g., `from brave_search import search_brave`)
+Group imports into three categories, separated by a blank line:
+1. Standard library
+2. Third-party libraries (if any)
+3. Local project imports
 
 **Example:**
-```python
-import os
-from typing import Optional, Dict
+```go
+import (
+	"fmt"
+	"net/http"
 
-import requests
-from flask import Flask
-
-from brave_search import search_brave
+	"github.com/johanesalxd/brave-search-app/internal/brave"
+)
 ```
 
 ### Naming Conventions
-- **Variables/Functions:** `snake_case` (e.g., `user_query`, `fetch_results`)
-- **Classes:** `PascalCase` (e.g., `SearchService`)
-- **Constants:** `UPPER_CASE` (e.g., `BRAVE_API_KEY`, `MAX_RETRIES`)
-- **Private Members:** Prefix with underscore (e.g., `_internal_helper`)
-
-### Type Hinting
-- **Strong Recommendation:** Add type hints to all new function signatures.
-- Use `typing` module for complex types (though standard collection types `list`, `dict` are preferred in Python 3.9+).
-
-**Example:**
-```python
-def search_brave(query: str) -> dict:
-    ...
-```
+- **Exported Symbols:** `PascalCase` (e.g., `SearchService`)
+- **Private Symbols:** `camelCase` (e.g., `internalHelper`)
+- **Acronyms:** Use all caps (e.g., `HTTPClient`, `URL`, `ID`)
+- **Short Names:** Use concise names for short-lived variables (e.g., `r` for `*http.Request`).
 
 ### Error Handling
-- Use specific exception blocks (e.g., `except ValueError`) rather than bare `except:`.
-- Propagate exceptions when the current scope cannot handle them meaningfully.
-- For HTTP requests, always check response status (e.g., `response.raise_for_status()`).
+- **Explicit Checks:** Always check errors immediately. Never use `_` to ignore errors.
+- **Context:** Wrap errors with context using `fmt.Errorf("...: %w", err)`.
+- **Punctuation:** Error strings should be lower-case and have no trailing punctuation.
 
 ### Documentation
-- Add docstrings to all public modules, classes, and functions.
-- Use **Google Style** docstrings.
+- **Comments:** Every exported symbol must have a doc comment.
+- **Style:** Comments must be complete sentences starting with the symbol name.
+- **Examples:** Include `ExampleXxx` functions in `_test.go` files for "testable documentation".
 
 **Example:**
-```python
-def search_brave(query: str) -> dict:
-    """
-    Executes a search query against the Brave Search API.
-
-    Args:
-        query (str): The search string.
-
-    Returns:
-        dict: The JSON response from the API.
-
-    Raises:
-        ValueError: If the API key is missing.
-        requests.exceptions.HTTPError: If the API request fails.
-    """
-    ...
+```go
+// Search performs a web search using the Brave Search API.
+func (c *Client) Search(query string) ([]Result, error) {
+	...
+}
 ```
+
+### Testing Patterns
+- **Table-Driven Tests:** Use struct slices for test cases and `t.Run()` for subtests.
+- **Isolation:** Use `httptest` to mock external API calls.
 
 ### Frontend (Templates)
 - HTML files reside in `templates/`.
-- Use Jinja2 syntax consistently (`{{ variable }}`, `{% block content %}`).
-- Ensure static assets (CSS, JS) are linked correctly via `url_for('static', filename='...')`.
+- Use Go `html/template` syntax consistently (`{{ .Variable }}`, `{{ range .List }}`).
+- Ensure static assets (CSS) are linked via `/static/`.
 
 ## 5. Agent Behavior Protocols
 
-1.  **Safety First:** Never commit secrets (like `BRAVE_API_KEY`). Ensure `.env` is in `.gitignore`.
-2.  **Incremental Changes:** When refactoring, make small, testable changes.
-3.  **Verification:** Always run the relevant test *before* and *after* making changes to ensure no regression.
-4.  **Self-Correction:** If a build or test fails, analyze the output, fix the specific error, and retry. Do not blindly attempt multiple random fixes.
-5.  **New Dependencies:** If adding a new library, update `pyproject.toml` (or `requirements.txt`) immediately.
+1.  **Safety First:** Never commit secrets. Ensure `.env` or sensitive keys are never tracked.
+2.  **Standard Library First:** Favor the Go standard library over third-party dependencies.
+3.  **Verification:** Always run `go test ./...` and `go vet ./...` before considering a task complete.
+4.  **Documentation:** When adding new public functions, ensure they are documented and have an associated `Example` test if appropriate.
+5.  **Self-Correction:** If a test fails, analyze the failure, fix the specific error, and verify with a targeted test run.
 
 ## 6. Git Workflow
-- **Commit Messages:** Use imperative mood, concise and descriptive.
-  - Good: "Add error handling for empty search queries"
-  - Bad: "Fixed bug"
-- **Atomic Commits:** Separate logic changes from formatting changes.
+- **Commit Messages:** Use imperative mood (e.g., "Add handler for search").
+- **Atomic Commits:** Keep logic changes separate from documentation or formatting updates.
