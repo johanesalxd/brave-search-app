@@ -22,11 +22,18 @@ A lightweight Go-based web application that provides a clean interface for searc
    cd brave-search-app
    ```
 
-2. **Configure Environment:**
-   Ensure your environment has the Brave Search API key. You can use a `.env` file (if using `mise` or a similar tool that loads it) or export it:
+2. **Trust and Install Tools (if using mise):**
    ```bash
-   export BRAVE_API_KEY=your_api_key_here
+   mise trust
+   mise install
    ```
+
+3. **Configure Environment:**
+   Create a `.env` file in the root directory:
+   ```env
+   BRAVE_API_KEY=your_api_key_here
+   ```
+   If using `mise` with the provided configuration, it will automatically load this file.
 
 ## Usage
 

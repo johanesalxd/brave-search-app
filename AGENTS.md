@@ -14,6 +14,7 @@ The project uses `mise` for tool versioning.
 ```bash
 # Install tools defined in mise.toml
 mise install
+mise trust # Required to enable tool versioning and env loading
 
 # Configuration is handled via environment variables
 export BRAVE_API_KEY=your_api_key_here
