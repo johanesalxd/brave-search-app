@@ -13,7 +13,7 @@ import (
 )
 
 // resultsTemplate is a minimal results template for handler tests.
-const resultsTemplate = `{{if .HasRich}}RICH:{{.RichResult.Subtype}}{{end}}MODE:{{.Mode}}{{range .Results}}TITLE:{{.Title}}{{end}}`
+const resultsTemplate = `{{if .HasRich}}RICH:{{.RichDisplay.Subtype}}{{end}}MODE:{{.Mode}}{{range .Results}}TITLE:{{.Title}}{{end}}`
 
 // newsTemplate is a minimal news template for handler tests.
 const newsTemplate = `QUERY:{{.Query}}{{range .Results}}TITLE:{{.Title}}SOURCE:{{.Source}}{{end}}`

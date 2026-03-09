@@ -65,11 +65,11 @@ func (s *Server) HandleSearch(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := struct {
-		Query      string
-		Results    []brave.Result
-		RichResult *brave.RichResult
-		Mode       SearchMode
-		HasRich    bool
+		Query       string
+		Results     []brave.Result
+		RichDisplay *brave.RichDisplay
+		Mode        SearchMode
+		HasRich     bool
 	}{
 		Query: query,
 		Mode:  mode,
@@ -91,8 +91,8 @@ func (s *Server) HandleSearch(w http.ResponseWriter, r *http.Request) {
 		if resp != nil {
 			data.Results = resp.Web.Results
 		}
-		data.RichResult = richResult
-		data.HasRich = richResult != nil
+		data.RichDisplay = brave.ParseRichDisplay(richResult)
+		data.HasRich = data.RichDisplay != nil
 	}
 
 	if err := s.templates.ExecuteTemplate(w, "results.html", data); err != nil {

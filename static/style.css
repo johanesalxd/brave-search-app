@@ -112,3 +112,131 @@ button:hover {
     font-size: 0.9rem;
     color: #4d5156;
 }
+
+/* Rich widget container */
+.rich-widget {
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+}
+
+/* Rich card base */
+.rich-card {
+    padding: 1rem 1.25rem;
+    border-left: 4px solid #9e9e9e;
+}
+
+.rich-card-header {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: small-caps;
+    letter-spacing: 0.04em;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.rich-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+/* Primary value sizes */
+.rich-temp,
+.rich-price,
+.rich-result,
+.rich-conversion {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+/* Change indicators */
+.rich-change.positive {
+    color: #1a7f37;
+    font-weight: 500;
+}
+
+.rich-change.negative {
+    color: #cf222e;
+    font-weight: 500;
+}
+
+/* Muted metadata */
+.rich-meta,
+.rich-pos {
+    font-size: 0.8rem;
+    color: #767676;
+}
+
+.rich-pos {
+    font-style: italic;
+}
+
+/* Monospace elements */
+.rich-expression {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 1rem;
+    color: #333;
+}
+
+.rich-json {
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 0.8rem;
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0.5rem;
+    background-color: #f1f3f4;
+    border-radius: 4px;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* Definition entry */
+.rich-definition {
+    margin-bottom: 0.5rem;
+}
+
+.rich-definition p {
+    margin: 0.15rem 0 0;
+    font-size: 0.95rem;
+}
+
+.rich-example {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Per-vertical accent colors */
+.rich-weather  { border-left-color: #1976d2; }
+.rich-stock    { border-left-color: #2e7d32; }
+.rich-crypto   { border-left-color: #e65100; }
+.rich-currency { border-left-color: #6a1b9a; }
+.rich-calculator { border-left-color: #00695c; }
+.rich-definitions { border-left-color: #283593; }
+
+/* Mode badge and toggle */
+.mode-badge {
+    font-size: 0.8rem;
+    color: #767676;
+    white-space: nowrap;
+}
+
+.mode-toggle {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.mode-btn {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+}
+
+.mode-btn.active {
+    background-color: #e8f0fe;
+    border-color: #1a73e8;
+    color: #1a73e8;
+}
