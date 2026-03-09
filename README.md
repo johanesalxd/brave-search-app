@@ -2,6 +2,8 @@
 
 A lightweight Go-based web application that provides a clean search interface powered by the Brave Search API. Supports standard web search, rich vertical cards, and news search — all with zero external dependencies.
 
+Built iteratively with OpenClaw orchestration and an OpenCode coding agent via the `.opencode/plans/` workflow.
+
 ## Features
 
 - **Web Search** — Standard web results via Brave Search API
@@ -9,7 +11,6 @@ A lightweight Go-based web application that provides a clean search interface po
 - **News Search** — Dedicated news results with source, age, and description
 - **Three-tab UI** — Web / Web+ / News toggle on the search and results pages
 - **Per-vertical rich cards** — Typed display (not raw JSON) with colour-coded CSS cards per vertical; unknown verticals fall back to pretty-printed JSON
-- **Graceful degradation** — Rich fetch failures fall back to standard web results silently
 - Built with Go standard library only — no external web frameworks or dependencies
 
 ## Setup & Installation

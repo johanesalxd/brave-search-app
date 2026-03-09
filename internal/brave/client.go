@@ -132,15 +132,6 @@ func (c *Client) SearchWithRich(query string) (*Response, *RichResult, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		if resp.StatusCode == http.StatusUnprocessableEntity {
-			// Some Brave API tiers reject enable_rich_callback=1 with 422.
-			// Gracefully fall back to standard web search instead of surfacing an error.
-			results, err := c.Search(query)
-			if err != nil {
-				return nil, nil, err
-			}
-			return &Response{Web: WebData{Results: results}}, nil, nil
-		}
 		return nil, nil, fmt.Errorf("api returned non-200 status code: %d", resp.StatusCode)
 	}
 

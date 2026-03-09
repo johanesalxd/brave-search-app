@@ -1,10 +1,10 @@
 {
-  "start_time": "2026-03-09T09:47:56Z",
-  "end_time": "2026-03-09T10:03:28Z",
-  "session_name": "opencode-rich-widget-ui-20260309T174756",
-  "plan_file": "/Users/johanesalxd/Developer/git/brave-search-app/.opencode/plans/plan-003-rich-widget-ui.md",
+  "start_time": "2026-03-09T10:22:41Z",
+  "end_time": "2026-03-09T10:26:02Z",
+  "session_name": "opencode-revert-422-fallback-20260309T182241",
+  "plan_file": "/Users/johanesalxd/Developer/git/brave-search-app/.opencode/plans/plan-004-revert-422-fallback.md",
   "model_requested": "google-vertex-anthropic/claude-sonnet-4-6@default",
-  "estimated_tokens": 80000,
+  "estimated_tokens": 25000,
   "response_ids": [],
   "exit_code": 0
 }
