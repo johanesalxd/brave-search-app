@@ -25,6 +25,7 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	mux.HandleFunc("/", server.HandleIndex)
 	mux.HandleFunc("/search", server.HandleSearch)
+	mux.HandleFunc("/news", server.HandleNews)
 
 	port := os.Getenv("PORT")
 	if port == "" {

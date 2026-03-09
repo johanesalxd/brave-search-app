@@ -11,11 +11,32 @@
         <a href="/" class="home-button">Home</a>
         <form action="/search" method="get">
             <input type="text" name="q" value="{{ .Query }}" required>
+            <input type="hidden" name="mode" id="search-mode" value="{{ .Mode }}">
+            <div class="mode-toggle">
+                <button type="button" id="btn-rich" class="mode-btn{{ if eq .Mode "rich" }} active{{ end }}" onclick="setMode('rich')">Rich</button>
+                <button type="button" id="btn-standard" class="mode-btn{{ if eq .Mode "standard" }} active{{ end }}" onclick="setMode('standard')">Standard</button>
+            </div>
             <button type="submit">Search</button>
         </form>
+        <span class="mode-badge">{{ if eq .Mode "rich" }}Rich Search{{ else }}Standard Search{{ end }}</span>
     </header>
-    
+
+    <script>
+    function setMode(mode) {
+        document.getElementById('search-mode').value = mode;
+        document.getElementById('btn-rich').classList.toggle('active', mode === 'rich');
+        document.getElementById('btn-standard').classList.toggle('active', mode === 'standard');
+    }
+    </script>
+
     <main style="margin-top: 2rem;">
+        {{ if .HasRich }}
+            <div class="rich-widget">
+                <span class="rich-vertical-label">{{ .RichResult.Subtype }}</span>
+                <pre class="rich-data">{{ printf "%s" .RichResult.Data }}</pre>
+            </div>
+        {{ end }}
+
         {{ if .Results }}
             {{ range .Results }}
                 <div class="result-item">

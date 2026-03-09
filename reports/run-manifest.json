@@ -1,0 +1,10 @@
+{
+  "start_time": "2026-03-09T09:12:04Z",
+  "end_time": "2026-03-09T09:28:31Z",
+  "session_name": "opencode-news-search-integration-20260309T171204",
+  "plan_file": "/Users/johanesalxd/Developer/git/brave-search-app/.opencode/plans/plan-002-news-search-integration.md",
+  "model_requested": "google-vertex-anthropic/claude-sonnet-4-6@default",
+  "estimated_tokens": 70000,
+  "response_ids": [],
+  "exit_code": 0
+}

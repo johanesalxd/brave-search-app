@@ -9,10 +9,33 @@
 <body>
     <div class="search-container">
         <h1>Brave Search</h1>
-        <form action="/search" method="get">
+        <div class="search-type-toggle">
+            <button type="button" id="tab-web" class="tab-btn" onclick="setSearchType('web')">Web</button>
+            <button type="button" id="tab-rich" class="tab-btn active" onclick="setSearchType('rich')">Web+</button>
+            <button type="button" id="tab-news" class="tab-btn" onclick="setSearchType('news')">News</button>
+        </div>
+        <form id="search-form" action="/search" method="get">
             <input type="text" name="q" placeholder="Search the web..." required autofocus>
+            <input type="hidden" name="mode" id="search-mode" value="rich">
             <button type="submit">Search</button>
         </form>
+        <script>
+        function setSearchType(type) {
+            var form = document.getElementById('search-form');
+            var modeInput = document.getElementById('search-mode');
+            document.getElementById('tab-web').classList.toggle('active', type === 'web');
+            document.getElementById('tab-rich').classList.toggle('active', type === 'rich');
+            document.getElementById('tab-news').classList.toggle('active', type === 'news');
+            if (type === 'news') {
+                form.action = '/news';
+                modeInput.name = '';
+            } else {
+                form.action = '/search';
+                modeInput.name = 'mode';
+                modeInput.value = type;
+            }
+        }
+        </script>
     </div>
 </body>
 </html>
